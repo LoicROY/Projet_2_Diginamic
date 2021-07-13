@@ -1,6 +1,5 @@
 package fr.diginamic.projet.Entity;
 
-public class Salarie {
+public class Salarie extends BasedEntity {
 
-    private Long id;
 }
