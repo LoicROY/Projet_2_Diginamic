@@ -41,7 +41,7 @@ public class SalarieController {
            service.save(salarie);
        return "redirect:/salarie";
    }
-    @GetMapping("/animal/delete/{salaries}")
+    @GetMapping("/salarie/delete/{salaries}")
     private String delete(@PathVariable("salaries") long id)throws Exception{
         service.delete(id);
         return "redirect:/salarie";

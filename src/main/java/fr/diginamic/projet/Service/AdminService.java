@@ -1,9 +1,7 @@
 package fr.diginamic.projet.Service;
 
-import fr.diginamic.projet.Entity.Administateur;
-import fr.diginamic.projet.Entity.Manager;
+import fr.diginamic.projet.Entity.Administrateur;
 import fr.diginamic.projet.Repository.AdminRepository;
-import fr.diginamic.projet.Repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +12,27 @@ public class AdminService {
     @Autowired
     AdminRepository repo;
 
-    public List<Administateur> list() {
-        return (List<Administateur>)repo.findAll();
+    public List<Administrateur> list() {
+        return (List<Administrateur>)repo.findAll();
     }
 
-    public Administateur get(Long id){
-        Optional<Administateur> opt= repo.findById(id);
+    public Administrateur get(Long id){
+        Optional<Administrateur> opt= repo.findById(id);
 
         return opt.orElseThrow();
 
 
     }
 
-    public Administateur save(Administateur administateur){
-        return repo.save(administateur);
+    public Administrateur save(Administrateur administrateur){
+        return repo.save(administrateur);
     }
 
 
     public void delete(Long id){
         repo.deleteById(id);
     }
-    public void deleteAdmin (Administateur administateur){
-        repo.delete(administateur);
+    public void deleteAdmin (Administrateur administrateur){
+        repo.delete(administrateur);
     }
 }

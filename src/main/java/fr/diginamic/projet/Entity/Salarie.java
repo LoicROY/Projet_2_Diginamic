@@ -44,6 +44,17 @@ public class Salarie extends BasedEntity {
     protected Set<Absence> absences = new HashSet<>();
 
 
+   /* public Boolean ifWeekEnd(LocalDate date, Absence dateAbsence){
+        if(date == dateAbsence){
+            return false;
+        }else{
+            return true;
+        }
+    }*/
+
+   // public int getSolde()
+
+
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Service service, Set<Absence> absences) {
         this.prenom = prenom;
         this.nom = nom;
