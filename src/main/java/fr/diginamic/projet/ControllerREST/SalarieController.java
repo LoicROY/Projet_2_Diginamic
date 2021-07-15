@@ -28,7 +28,7 @@ public class SalarieController {
     public String createSalarie(@PathVariable("salaries")Long id,Model model)throws Exception{
        Salarie salarie= null;
        if(id==0L){
-           //salarie = new Salarie(0l,"","","",);
+           //salarie = new Salarie(0l,"","","",);??????
        }else{
            salarie = service.get(id);
        }
