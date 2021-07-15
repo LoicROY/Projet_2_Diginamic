@@ -30,7 +30,7 @@ public class AdminController {
     public String createAdmin(@PathVariable("admins")Long id, Model model)throws Exception{
         Administrateur administrateur= null;
         if(id==0L){
-            //salarie = new Salarie(0l,"","","",);??????
+            administrateur = new Administrateur();
         }else{
             administrateur = service.get(id);
         }

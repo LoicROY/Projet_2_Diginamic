@@ -1,6 +1,7 @@
 package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.Salarie;
+import fr.diginamic.projet.Entity.Service;
 import fr.diginamic.projet.Service.SalarieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -18,17 +19,16 @@ public class SalarieController {
     SalarieService service;
 
    @GetMapping("/salarie")
-    public String listSalarie(Model model){
-       List<Salarie> list = service.list();
-       model.addAttribute("salaries", list);
-       return "salarie";
+    public List<Salarie> listSalarie(){
+
+       return service.list();
    }
 
    @GetMapping("/salarie/create/{salaries}")
     public String createSalarie(@PathVariable("salaries")Long id,Model model)throws Exception{
        Salarie salarie= null;
-       if(id==0L){
-           //salarie = new Salarie(0l,"","","",);??????
+       if(id==1L){
+           salarie = new Salarie();
        }else{
            salarie = service.get(id);
        }

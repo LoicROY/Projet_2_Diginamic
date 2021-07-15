@@ -29,7 +29,7 @@ public class ManagerController {
     public String createManager(@PathVariable("managers")Long id, Model model)throws Exception{
         Manager manager= null;
         if(id==0L){
-            //salarie = new Salarie(0l,"","","",);??????
+            manager= new Manager();
         }else{
             manager = service.get(id);
         }
@@ -37,13 +37,13 @@ public class ManagerController {
         return "createManagers";
     }
     @PostMapping("/manager/create")
-    public String PostCreateManager(Manager manager)throws Exception{
+    public String PostCreateManager(Manager manager){
 
         service.save(manager);
         return "redirect:/manager";
     }
     @GetMapping("/manager/delete/{managers}")
-    private String delete(@PathVariable("managers") long id)throws Exception{
+    private String delete(@PathVariable("managers") long id){
         service.delete(id);
         return "redirect:/manager";
     }

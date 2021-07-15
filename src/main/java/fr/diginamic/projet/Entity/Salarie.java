@@ -8,43 +8,44 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "salarie")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE")
-@DiscriminatorValue("S")
+@DiscriminatorColumn(name = "discriminant")
+@DiscriminatorValue("salarie")
 public class Salarie extends BasedEntity {
 
-    @Column
+    @Column(name = "prenom")
     protected String prenom;
 
-    @Column
+    @Column(name = "nom")
     protected String nom;
 
-    @Column
+    @Column(name = "email")
     protected String email;
 
-    @Column(name = "dateNaissance")
+    @Column(name = "date_naissance")
     protected LocalDate dateDeNaissance;
 
-    @Column(name = "dateArrivee")
+    @Column(name = "date_arrivee")
     protected LocalDate dateArrivee;
 
-    @Column(name = "passwordHashed")
+    @Column(name = "password_hashed")
     protected String password;
 
 
     @ManyToOne
-    @JoinColumn(name = "id_service")
+    @JoinColumn(name = "id_service",referencedColumnName = "id")
     protected Service service;
 
     @ManyToMany
     @JoinTable(name = "historique_absence",
-            joinColumns = @JoinColumn(name = "SALARIE_ID",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "ABSENCE_ID",referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "id_Salarie",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_Absence",referencedColumnName = "id")
     )
     protected Set<Absence> absences = new HashSet<>();
 
 
-   /* public Boolean ifWeekEnd(LocalDate date, Absence dateAbsence){
+   /* public Boolean ifWeekEnd(LocalDateTime date, Absence dateAbsence){
         if(date == dateAbsence){
             return false;
         }else{
