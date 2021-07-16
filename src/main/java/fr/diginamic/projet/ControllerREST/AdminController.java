@@ -1,15 +1,10 @@
 package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.Administrateur;
-import fr.diginamic.projet.Entity.Manager;
 import fr.diginamic.projet.Service.AdminService;
-import fr.diginamic.projet.Service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,33 +15,27 @@ public class AdminController {
     AdminService service;
 
     @GetMapping("/administrateur")
-    public String listAdmin(Model model){
-        List<Administrateur> list = service.list();
-        model.addAttribute("admins", list);
-        return "administrateur";
+    public List<Administrateur> listAdmin(){
+
+        return service.list();
     }
 
-    @GetMapping("/administrateur/create/{admins}")
-    public String createAdmin(@PathVariable("admins")Long id, Model model)throws Exception{
-        Administrateur administrateur= null;
-        if(id==0L){
-            administrateur = new Administrateur();
-        }else{
-            administrateur = service.get(id);
-        }
-        model.addAttribute("admin",administrateur);
-        return "createAdmins";
+    @GetMapping("/administrateur/create/{id}")
+    public Administrateur updateAdmin(@PathVariable("id")Long id, Model model)throws Exception{
+
+        return service.get(id);
     }
     @PostMapping("/administrateur/create")
-    public String PostCreateAdmin(Administrateur administrateur)throws Exception{
+    public Administrateur PostCreateAdmin(@RequestBody Administrateur administrateur)throws Exception{
 
-        service.save(administrateur);
-        return "redirect:/administrateur";
+        administrateur = service.save(administrateur);
+
+        return administrateur;
     }
-    @GetMapping("/administrateur/delete/{admins}")
-    private String delete(@PathVariable("admins") long id)throws Exception{
+    @GetMapping("/administrateur/delete/{id}")
+    private void delete(@PathVariable("id") long id)throws Exception{
         service.delete(id);
-        return "redirect:/administrateur";
+
     }
 
 

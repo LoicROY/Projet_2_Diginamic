@@ -2,7 +2,6 @@ package fr.diginamic.projet.Entity;
 
 
 import javax.persistence.*;
-import java.security.Provider;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "salarie")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminant")
+@DiscriminatorColumn(name = "discriminant",discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("salarie")
 public class Salarie extends BasedEntity {
 
@@ -35,7 +34,7 @@ public class Salarie extends BasedEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_service",referencedColumnName = "id")
-    protected Service service;
+    protected Departement departement;
 
     @ManyToMany
     @JoinTable(name = "historique_absence",
@@ -56,21 +55,21 @@ public class Salarie extends BasedEntity {
    // public int getSolde()
 
 
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Service service, Set<Absence> absences) {
+    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
         this.dateDeNaissance = dateDeNaissance;
         this.dateArrivee = dateArrivee;
         this.password = password;
-        this.service = service;
+        this.departement = departement;
         this.absences = absences;
     }
 
     public Salarie() {
     }
 
-    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Service service) {
+    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
         super(id);
         this.prenom = prenom;
         this.nom = nom;
@@ -78,17 +77,17 @@ public class Salarie extends BasedEntity {
         this.dateDeNaissance = dateDeNaissance;
         this.dateArrivee = dateArrivee;
         this.password = password;
-        this.service = service;
+        this.departement = departement;
     }
 
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Service service) {
+    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
         this.dateDeNaissance = dateDeNaissance;
         this.dateArrivee = dateArrivee;
         this.password = password;
-        this.service = service;
+        this.departement = departement;
     }
 
     public String getPrenom() {
@@ -139,12 +138,12 @@ public class Salarie extends BasedEntity {
         this.password = password;
     }
 
-    public Service getService() {
-        return service;
+    public Departement getService() {
+        return departement;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(Departement departement) {
+        this.departement = departement;
     }
 
     public Set<Absence> getAbsences() {
@@ -165,7 +164,7 @@ public class Salarie extends BasedEntity {
                 ", dateDeNaissance=" + dateDeNaissance +
                 ", dateArrivee=" + dateArrivee +
                 ", password='" + password + '\'' +
-                ", service=" + service +
+                ", service=" + departement +
                 ", absences=" + absences +
                 '}';
     }

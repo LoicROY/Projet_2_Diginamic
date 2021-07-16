@@ -31,12 +31,12 @@
   <!--/*@thymesVar id="salaries" type=""*/-->
   <tr th:each="salarie : ${salaries}">
     <td th:text="${salarie}"/>
-    <td th:text="${salarie.prenom}"/>
-    <td th:text="${salarie.email}"/>
-    <td th:text="${salarie.dateNaissance}"/>
+    <td th:text="${salarie}"/>
+    <td th:text="${salarie}"/>
+    <td th:text="${salarie}"/>
 
-    <td><a th:href="'javascript:deleteFunc(' + ${salarie.id} +');'"><img src="../static/resources/img/delete.png" height="16" width="16" th:src="@{/resources/img/delete.png}" /></a></td>
-    <td><a th:href="'javascript:editFunc(' + ${salarie.id} +');'"><img src="../static/resources/img/edit.png" height="16" width="16" th:src="@{/resources/img/edit.png}" /></a></td>
+    <td><a th:href="'javascript:deleteFunc(' + ${salarie} +');'"><img src="../static/resources/img/delete.png" height="16" width="16" th:src="@{/resources/img/delete.png}" /></a></td>
+    <td><a th:href="'javascript:editFunc(' + ${salarie} +');'"><img src="../static/resources/img/edit.png" height="16" width="16" th:src="@{/resources/img/edit.png}" /></a></td>
   </tr>
   </tbody>
 </table>

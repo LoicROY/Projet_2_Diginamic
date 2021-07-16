@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("ADMINISTATEUR")
+@DiscriminatorValue("administrateur")
 public class Administrateur extends Salarie {
 
 

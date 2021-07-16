@@ -1,15 +1,10 @@
 package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.Manager;
-import fr.diginamic.projet.Entity.Salarie;
 import fr.diginamic.projet.Service.ManagerService;
-import fr.diginamic.projet.Service.SalarieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,33 +14,27 @@ public class ManagerController {
     ManagerService service;
 
     @GetMapping("/manager")
-    public String listManager(Model model){
-        List<Manager> list = service.list();
-        model.addAttribute("salaries", list);
-        return "salarie";
+    public List<Manager> listManager(){
+
+        return service.list();
     }
 
-    @GetMapping("/manager/create/{managers}")
-    public String createManager(@PathVariable("managers")Long id, Model model)throws Exception{
-        Manager manager= null;
-        if(id==0L){
-            manager= new Manager();
-        }else{
-            manager = service.get(id);
-        }
-        model.addAttribute("manager",manager);
-        return "createManagers";
+    @GetMapping("/manager/create/{id}")
+    public Manager update(@PathVariable("id")Long id, Model model)throws Exception{
+
+        return service.get(id);
     }
     @PostMapping("/manager/create")
-    public String PostCreateManager(Manager manager){
+    public Manager PostCreateManager(@RequestBody Manager manager)throws Exception{
 
-        service.save(manager);
-        return "redirect:/manager";
+        manager = service.save(manager);
+
+        return manager;
     }
-    @GetMapping("/manager/delete/{managers}")
-    private String delete(@PathVariable("managers") long id){
+    @GetMapping("/manager/delete/{id}")
+    private void delete(@PathVariable("id") long id)throws Exception{
         service.delete(id);
-        return "redirect:/manager";
+
     }
 
 
