@@ -18,20 +18,17 @@ public class AdminService {
 
     public Administrateur get(Long id){
         Optional<Administrateur> opt= repo.findById(id);
-
         return opt.orElseThrow();
-
-
     }
 
     public Administrateur save(Administrateur administrateur){
         return repo.save(administrateur);
     }
 
-
     public void delete(Long id){
         repo.deleteById(id);
     }
+
     public void deleteAdmin (Administrateur administrateur){
         repo.delete(administrateur);
     }

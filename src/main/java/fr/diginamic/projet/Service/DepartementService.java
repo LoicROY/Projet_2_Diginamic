@@ -20,20 +20,17 @@ public class DepartementService {
 
     public Departement get(Long id){
         Optional<Departement> opt= repo.findById(id);
-
         return opt.orElseThrow();
-
-
     }
 
     public Departement save(Departement departement){
         return repo.save(departement);
     }
 
-
     public void delete(Long id){
         repo.deleteById(id);
     }
+
     public void deleteManager (Departement departement){
         repo.delete(departement);
     }

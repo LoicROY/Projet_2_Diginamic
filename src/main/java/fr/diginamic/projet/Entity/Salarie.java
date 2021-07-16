@@ -12,37 +12,31 @@ import java.util.Set;
 @DiscriminatorValue("salarie")
 public class Salarie extends BasedEntity {
 
-    @Column(name = "prenom")
+    @Column(name = "prenom", nullable = false)
     protected String prenom;
 
-    @Column(name = "nom")
+    @Column(name = "nom", nullable = false)
     protected String nom;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 100, nullable = false)
     protected String email;
 
-    @Column(name = "date_naissance")
+    @Column(name = "date_naissance", nullable = false)
     protected LocalDate dateDeNaissance;
 
-    @Column(name = "date_arrivee")
+    @Column(name = "date_arrivee", nullable = false)
     protected LocalDate dateArrivee;
 
-    @Column(name = "password_hashed")
+    @Column(name = "password_hashed", nullable = false)
     protected String password;
 
 
     @ManyToOne
-    @JoinColumn(name = "id_service",referencedColumnName = "id")
+    @JoinColumn(name = "id_service", referencedColumnName = "id", nullable = false)
     protected Departement departement;
 
-    @ManyToMany
-    @JoinTable(name = "historique_absence",
-            joinColumns = @JoinColumn(name = "id_Salarie",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_Absence",referencedColumnName = "id")
-    )
+    @OneToMany(mappedBy = "salaries")
     protected Set<Absence> absences = new HashSet<>();
-
-   // public int getSolde()
 
 
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
@@ -128,11 +122,11 @@ public class Salarie extends BasedEntity {
         this.password = password;
     }
 
-    public Departement getService() {
+    public Departement getDepartement() {
         return departement;
     }
 
-    public void setService(Departement departement) {
+    public void setDepartement(Departement departement) {
         this.departement = departement;
     }
 
@@ -142,6 +136,18 @@ public class Salarie extends BasedEntity {
 
     public void setAbsences(Set<Absence> absences) {
         this.absences = absences;
+    }
+
+    public void addAbsence(Absence absence) {
+        if (absence != null) {
+            absence.setSalarie(this);
+        }
+    }
+
+    public void removeAbsence(Absence absence) {
+        if (absence != null) {
+            absence.setSalarie(null);
+        }
     }
 
     @Override

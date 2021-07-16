@@ -1,10 +1,9 @@
 package fr.diginamic.projet.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Exception.AbsenceException;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "ABSENCE")
@@ -16,8 +15,11 @@ public abstract class Absence extends BasedEntity {
     @Enumerated(value = EnumType.STRING)
     protected StatutType statut;
 
-    @ManyToMany(mappedBy = "absences")
-    protected Set<Salarie> salaries = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "id_salarie", referencedColumnName = "id")
+    @JsonIgnore
+    protected Salarie salarie;
+
 
     protected Absence() {
         this(null, null);
@@ -40,12 +42,18 @@ public abstract class Absence extends BasedEntity {
         this.statut = statut;
     }
 
-    public Set<Salarie> getSalaries() {
-        return salaries;
+    public Salarie getSalarie() {
+        return salarie;
     }
 
-    public void setSalaries(Set<Salarie> salaries) {
-        this.salaries = salaries;
+    public void setSalarie(Salarie salarie) {
+        if (this.salarie != null){
+            this.salarie.getAbsences().remove(this);
+        }
+        this.salarie = salarie;
+        if (salarie != null){
+            salarie.getAbsences().add(this);
+        }
     }
 
     public abstract void isValid() throws AbsenceException;
@@ -54,6 +62,7 @@ public abstract class Absence extends BasedEntity {
     public String toString() {
         return "Absence{" +
                 "statut=" + statut +
+                ", salarie=" + salarie.getId() +
                 ", id=" + id +
                 '}';
     }
