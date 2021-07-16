@@ -13,6 +13,7 @@ public abstract class AbsenceObligatoire extends Absence {
     @Column(name = "date_absence")
     protected LocalDate date;
     @Column(name = "jour")
+    @Enumerated(value = EnumType.STRING)
     protected DayOfWeek jour;
     @Column(name = "libelle")
     protected String libelle;
