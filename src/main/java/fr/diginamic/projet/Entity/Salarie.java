@@ -38,7 +38,6 @@ public class Salarie extends BasedEntity {
     @OneToMany(mappedBy = "salaries")
     protected Set<Absence> absences = new HashSet<>();
 
-
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
         this.prenom = prenom;
         this.nom = nom;
@@ -165,4 +164,3 @@ public class Salarie extends BasedEntity {
                 '}';
     }
 }
-
