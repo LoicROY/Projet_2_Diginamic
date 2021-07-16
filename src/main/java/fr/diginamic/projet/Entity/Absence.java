@@ -1,12 +1,22 @@
 package fr.diginamic.projet.Entity;
 
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
+import fr.diginamic.projet.Exception.AbsenceException;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ABSENCE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "discriminant", discriminatorType = DiscriminatorType.STRING)
 public abstract class Absence extends BasedEntity {
 
+    @Column(name = "statut", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     protected StatutType statut;
 
     protected Absence() {
+        this(null, null);
     }
 
     protected Absence(StatutType statut) {
@@ -25,6 +35,8 @@ public abstract class Absence extends BasedEntity {
     public void setStatut(StatutType statut) {
         this.statut = statut;
     }
+
+    public abstract void isValid() throws AbsenceException;
 
     @Override
     public String toString() {

@@ -1,4 +1,9 @@
 package fr.diginamic.projet.Service;
 
-public class SalarieService {
+import fr.diginamic.projet.Entity.Salarie;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class SalarieService extends CrudService<Salarie> {
 }
