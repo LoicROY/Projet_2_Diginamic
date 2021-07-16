@@ -1,5 +1,8 @@
 package fr.diginamic.projet.Entity;
 
+
+import fr.diginamic.projet.Entity.Enumeration.AbsenceChoisieType;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -42,7 +45,12 @@ public class Salarie extends BasedEntity {
     )
     protected Set<Absence> absences = new HashSet<>();
 
-   // public int getSolde()
+
+//    public double getSolde(){
+//        double max = RttEmploye.
+//
+//    }
+
 
 
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
@@ -159,4 +167,3 @@ public class Salarie extends BasedEntity {
                 '}';
     }
 }
-
