@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @DiscriminatorValue("rtt_employeur")
 public class RttEmployeur extends AbsenceObligatoire {
 
+
     public static final int NOMBRE_MAX = 25;
 
     public RttEmployeur() throws AbsenceException {
@@ -47,4 +48,5 @@ public class RttEmployeur extends AbsenceObligatoire {
                 ", id=" + id +
                 '}';
     }
+
 }

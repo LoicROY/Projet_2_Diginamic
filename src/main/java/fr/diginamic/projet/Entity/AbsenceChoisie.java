@@ -18,7 +18,7 @@ public abstract class AbsenceChoisie extends Absence {
     protected String motif;
 
     protected AbsenceChoisie() throws AbsenceException {
-        this(null, null, null, null, null);
+        super();
     }
 
     protected AbsenceChoisie(LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
