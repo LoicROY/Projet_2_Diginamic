@@ -13,7 +13,7 @@ public abstract class Absence extends BasedEntity {
 
     @Column(name = "statut", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    protected StatutType statut;
+    protected StatutType statut = StatutType.INITIALE ;
 
     @ManyToOne
     @JoinColumn(name = "id_salarie", referencedColumnName = "id")
@@ -22,7 +22,7 @@ public abstract class Absence extends BasedEntity {
 
 
     protected Absence() {
-        this(null, null);
+        super();
     }
 
     protected Absence(StatutType statut) {

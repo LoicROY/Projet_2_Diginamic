@@ -15,9 +15,9 @@ public class NightBatchController  {
     private static final String EUROPE_PARIS = "Europe/Paris";
 
     @Autowired
-    NightBatchService service;
+    private NightBatchService service;
 
-    @Scheduled(cron = "0 0 23 * * ?",zone = EUROPE_PARIS)
+    //@Scheduled(cron = "0 0 23 * * ?",zone = EUROPE_PARIS)
     @GetMapping("/batch")
     public void traiter() throws AbsenceException {
         service.traiterAbsenceChoisie();
