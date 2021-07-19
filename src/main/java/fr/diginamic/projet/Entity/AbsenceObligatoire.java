@@ -37,7 +37,7 @@ public abstract class AbsenceObligatoire extends Absence {
             this.jour = date.getDayOfWeek();
         }
         this.libelle = libelle;
-        isValid();
+//        isValid();
     }
 
     public LocalDate getDate() {

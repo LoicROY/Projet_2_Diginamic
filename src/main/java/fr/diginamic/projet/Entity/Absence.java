@@ -22,7 +22,7 @@ public abstract class Absence extends BasedEntity {
 
 
     protected Absence() {
-        this(null, null);
+        super();
     }
 
     protected Absence(StatutType statut) {

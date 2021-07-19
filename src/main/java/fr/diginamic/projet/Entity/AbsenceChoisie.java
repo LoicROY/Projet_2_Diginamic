@@ -34,7 +34,7 @@ public abstract class AbsenceChoisie extends Absence {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.motif = motif;
-        isValid();
+//        isValid();
     }
 
     public LocalDate getDateDebut() {

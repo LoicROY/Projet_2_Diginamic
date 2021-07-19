@@ -35,7 +35,7 @@ public class Salarie extends BasedEntity {
     @JoinColumn(name = "id_service", referencedColumnName = "id", nullable = false)
     protected Departement departement;
 
-    @OneToMany(mappedBy = "salaries")
+    @OneToMany(mappedBy = "salarie")
     protected Set<Absence> absences = new HashSet<>();
 
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
