@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 @DiscriminatorValue("conge_paye")
 public class CongePaye extends AbsenceChoisie {
 
-    public static final int NOMBRE_MAX = 6;
+    public static final int NOMBRE_MAX = 25;
 
     public CongePaye() throws AbsenceException {
     }
