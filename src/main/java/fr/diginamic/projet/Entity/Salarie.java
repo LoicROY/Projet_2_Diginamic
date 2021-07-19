@@ -1,8 +1,12 @@
 package fr.diginamic.projet.Entity;
 
+import fr.diginamic.projet.Exception.AbsenceException;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,8 +39,28 @@ public class Salarie extends BasedEntity {
     @JoinColumn(name = "id_service", referencedColumnName = "id", nullable = false)
     protected Departement departement;
 
-    @OneToMany(mappedBy = "salaries")
+    @OneToMany(mappedBy = "salarie")
     protected Set<Absence> absences = new HashSet<>();
+
+    public double getSoldeRTT() throws AbsenceException {
+        double cpt=0;
+        for (Absence a :absences){
+            if (a instanceof RttEmploye){
+                cpt+= ChronoUnit.DAYS.between(((RttEmploye) a).getDateDebut(), ((RttEmploye) a).getDateFin());
+            }
+        }
+        return RttEmploye.NOMBRE_MAX - cpt;
+    }
+
+    public double getSoldeCP(){
+        double cpt=0;
+        for (Absence a :absences){
+            if (a instanceof CongePaye){
+             cpt += ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin());
+            }
+        }
+        return CongePaye.NOMBRE_MAX - cpt;
+    }
 
     public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
         this.prenom = prenom;
