@@ -8,6 +8,8 @@ import fr.diginamic.projet.Utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Properties;
+
 @Service
 public class NightBatchService {
     @Autowired
@@ -28,9 +30,22 @@ public class NightBatchService {
                             break;
 
                         case CONGE_PAYE:
-                        case RTT_EMPLOYE:
                             AbsenceChoisie a = (AbsenceChoisie) absence;
                             if (a.getSalarie().getSoldeCP() < DateUtils.workedDaysBetween(a.getDateDebut(), a.getDateFin())) {
+                                //pas suffisament de jours disponibles
+                                absence.setStatut(StatutType.REJETEE);
+                            } else { //validation ok
+                                absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+                                if (absence.getSalarie().getManager() != null){
+                                    sendMail(absence.getSalarie().getManager().getEmail());
+                                }
+                            }
+                            repo.save(absence);
+                            break;
+
+                        case RTT_EMPLOYE:
+                            AbsenceChoisie b = (AbsenceChoisie) absence;
+                            if (b.getSalarie().getSoldeRTT() < DateUtils.workedDaysBetween(b.getDateDebut(), b.getDateFin())) {
                                 //pas suffisament de jours disponibles
                                 absence.setStatut(StatutType.REJETEE);
                             } else { //validation ok
@@ -57,7 +72,7 @@ public class NightBatchService {
     }
 
     private void sendMail(String email){
-        //TODO envoi de mail
+
     }
 
 }
