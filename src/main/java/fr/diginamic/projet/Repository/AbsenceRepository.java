@@ -6,10 +6,7 @@ import org.apache.catalina.LifecycleState;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-
 public interface AbsenceRepository extends CrudRepository<Absence, Long> {
-
-
 
    List<Absence> findAllByStatut(StatutType statutType);
 

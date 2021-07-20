@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class ManagerController {
     @Autowired
-    ManagerService service;
+    private ManagerService service;
 
     @GetMapping("/manager")
     public List<Manager> listManager(){

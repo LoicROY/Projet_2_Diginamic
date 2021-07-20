@@ -12,7 +12,7 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    AdminService service;
+    private AdminService service;
 
     @GetMapping("/administrateur")
     public List<Administrateur> listAdmin(){

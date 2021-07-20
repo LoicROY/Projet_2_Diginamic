@@ -39,6 +39,10 @@ public class Salarie extends BasedEntity {
     @JoinColumn(name = "id_service", referencedColumnName = "id", nullable = false)
     protected Departement departement;
 
+    @ManyToOne
+    @JoinColumn(name = "id_manager", referencedColumnName = "id", nullable = false)
+    protected Manager manager;
+
     @OneToMany(mappedBy = "salarie")
     protected Set<Absence> absences = new HashSet<>();
 
@@ -153,6 +157,14 @@ public class Salarie extends BasedEntity {
         this.departement = departement;
     }
 
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
     public Set<Absence> getAbsences() {
         return absences;
     }
@@ -183,7 +195,8 @@ public class Salarie extends BasedEntity {
                 ", dateDeNaissance=" + dateDeNaissance +
                 ", dateArrivee=" + dateArrivee +
                 ", password='" + password + '\'' +
-                ", service=" + departement +
+                ", departement=" + departement +
+                ", manager=" + manager.getId() +
                 ", absences=" + absences +
                 '}';
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public class SalarieController {
 
     @Autowired
-    SalarieService service;
+    private SalarieService service;
 
     @GetMapping("")
     public List<Salarie> listSalarie(){

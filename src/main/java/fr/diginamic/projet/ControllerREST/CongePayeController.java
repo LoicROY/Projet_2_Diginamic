@@ -2,8 +2,10 @@ package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.CongePaye;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
+import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Exception.AlgorithmException;
 import fr.diginamic.projet.Service.CongePayeService;
+import fr.diginamic.projet.Validator.AbsenceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ import java.util.List;
 public class CongePayeController {
 
     @Autowired
-    CongePayeService congePayeService;
+    private CongePayeService congePayeService;
 
     @GetMapping("")
     public List<CongePaye> getAll() {
@@ -27,19 +29,21 @@ public class CongePayeController {
     }
 
     @PostMapping("/create")
-    public CongePaye create(@RequestBody CongePaye congePaye) throws AlgorithmException {
+    public CongePaye create(@RequestBody CongePaye congePaye) throws AlgorithmException, AbsenceException {
         if (congePaye.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
         }
+        AbsenceValidator.isValid(congePaye);
         congePaye.setStatut(StatutType.INITIALE);
         return congePayeService.save(congePaye);
     }
 
     @PutMapping("/update")
-    public CongePaye update(@RequestBody CongePaye congePaye) throws AlgorithmException {
+    public CongePaye update(@RequestBody CongePaye congePaye) throws AlgorithmException, AbsenceException {
         if (congePaye.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
         }
+        AbsenceValidator.isValid(congePaye);
         return congePayeService.save(congePaye);
     }
 
