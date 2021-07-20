@@ -14,6 +14,7 @@ public class NightBatchService {
     private AbsenceRepository repo;
 
     private final String CONGE_SANS_SOLDE = "CongeSansSolde";
+    private final String CONGE_ANTICIPE = "CongeAnticipe";
     private final String CONGE_PAYE = "CongePaye";
     private final String RTT_EMPLOYE = "RttEmploye";
     private final String RTT_EMPLOYEUR = "RttEmployeur";
@@ -25,6 +26,7 @@ public class NightBatchService {
                     switch (absence.getClass().getSimpleName()) {
 
                         case CONGE_SANS_SOLDE:
+                        case CONGE_ANTICIPE:
                             absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
                             repo.save(absence);
                             break;
