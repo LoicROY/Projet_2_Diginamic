@@ -16,6 +16,8 @@ public class NightBatchService {
     private final String CONGE_SANS_SOLDE = "CongeSansSolde";
     private final String CONGE_PAYE = "CongePaye";
     private final String RTT_EMPLOYE = "RttEmploye";
+    private final String RTT_EMPLOYEUR = "RttEmployeur";
+    private final String JOUR_FERIE = "JourFerie";
 
 
     public void traiterAbsenceChoisie() throws AbsenceException {
@@ -49,7 +51,8 @@ public class NightBatchService {
 
     public void traiterAbsenceObligatoire() {
         repo.findAllByStatut(StatutType.INITIALE).stream()
-                .filter(absence -> absence instanceof AbsenceObligatoire)
+                .filter(absence -> absence.getClass().getSimpleName().equals(JOUR_FERIE) ||
+                                        absence.getClass().getSimpleName().equals(RTT_EMPLOYEUR))
                 .forEach(absence -> {
                     absence.setStatut(StatutType.VALIDEE);
                     repo.save(absence);
