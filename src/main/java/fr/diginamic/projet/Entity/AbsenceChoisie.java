@@ -34,7 +34,6 @@ public abstract class AbsenceChoisie extends Absence {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.motif = motif;
-        isValid();
     }
 
     public LocalDate getDateDebut() {
@@ -66,8 +65,8 @@ public abstract class AbsenceChoisie extends Absence {
         if (dateFin.isBefore(dateDebut)){
             throw new AbsenceException("La date de fin ne peut pas être avant la date de début");
         }
-        if (dateDebut.isBefore(LocalDate.now()) || dateDebut.isEqual(LocalDate.now())){
-            throw new AbsenceException("La date de début ne peut pas être aujourd'hui");
+        if (!dateDebut.isAfter(LocalDate.now())){
+            throw new AbsenceException("La date de début doit être après aujourd'hui");
         }
         if (DateUtils.isSaturdayOrSunday(dateDebut) || DateUtils.isSaturdayOrSunday(dateFin)) {
             throw new AbsenceException("Vous ne pouvez pas poser d'absence qui commence ou finis un week end'");

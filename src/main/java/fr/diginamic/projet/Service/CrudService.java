@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 public abstract class CrudService<T> {
 
     @Autowired
-    CrudRepository<T, Long> crudRepository;
+    protected CrudRepository<T, Long> crudRepository;
 
     public List<T> findAll() {
         return (List<T>) crudRepository.findAll();

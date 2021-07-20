@@ -1,5 +1,7 @@
 package fr.diginamic.projet.Service;
 
+import fr.diginamic.projet.Entity.Absence;
+import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Entity.Manager;
 import fr.diginamic.projet.Entity.Salarie;
 import fr.diginamic.projet.Repository.ManagerRepository;

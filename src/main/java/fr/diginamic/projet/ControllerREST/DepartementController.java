@@ -12,7 +12,7 @@ import java.util.List;
 public class DepartementController {
 
     @Autowired
-    DepartementService service;
+    private DepartementService service;
 
     @GetMapping("")
     public List<Departement> listService(){

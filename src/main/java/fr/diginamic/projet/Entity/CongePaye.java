@@ -2,6 +2,7 @@ package fr.diginamic.projet.Entity;
 
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Exception.AbsenceException;
+import fr.diginamic.projet.Utils.DateUtils;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -29,12 +30,11 @@ public class CongePaye extends AbsenceChoisie {
         super(id, statut, dateDebut, dateFin, motif);
     }
 
-
     @Override
     public void isValid() throws AbsenceException {
         super.isValid();
-        if (ChronoUnit.DAYS.between(dateDebut, dateFin.plusDays(1)) > NOMBRE_MAX) {
-            throw new AbsenceException("Vous ne pouvez pas poser + de " + NOMBRE_MAX + " jours de Rtt employé");
+        if (DateUtils.workedDaysBetween(dateDebut, dateFin) > NOMBRE_MAX) {
+            throw new AbsenceException("Vous ne pouvez pas poser + de " + NOMBRE_MAX + " jours de Congé payé");
         }
     }
 

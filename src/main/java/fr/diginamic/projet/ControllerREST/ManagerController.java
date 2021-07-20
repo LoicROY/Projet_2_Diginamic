@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/manager")
 public class ManagerController {
     @Autowired
-    ManagerService service;
+    private ManagerService service;
 
     @GetMapping("")
     public List<Manager> listManager(){

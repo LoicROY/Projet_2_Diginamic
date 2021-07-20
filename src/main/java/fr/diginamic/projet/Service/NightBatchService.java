@@ -5,70 +5,59 @@ import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Repository.AbsenceRepository;
 import fr.diginamic.projet.Utils.DateUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
 @Service
 public class NightBatchService {
-    protected final Log logger = LogFactory.getLog(this.getClass());
     @Autowired
-    AbsenceRepository repo;
+    private AbsenceRepository repo;
+
+    private final String CONGE_SANS_SOLDE = "CongeSansSolde";
+    private final String CONGE_PAYE = "CongePaye";
+    private final String RTT_EMPLOYE = "RttEmploye";
 
 
     public void traiterAbsenceChoisie() throws AbsenceException {
+        repo.findAllByStatut(StatutType.INITIALE).forEach( absence -> {
+                    switch (absence.getClass().getSimpleName()) {
 
+                        case CONGE_SANS_SOLDE:
+                            absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+                            repo.save(absence);
+                            break;
 
-      List<Absence>absences =  repo.findAllByStatut(StatutType.INITIALE);
+                        case CONGE_PAYE:
+                        case RTT_EMPLOYE:
+                            AbsenceChoisie a = (AbsenceChoisie) absence;
+                            if (a.getSalarie().getSoldeCP() < DateUtils.workedDaysBetween(a.getDateDebut(), a.getDateFin())) {
+                                //pas suffisament de jours disponibles
+                                absence.setStatut(StatutType.REJETEE);
+                            } else { //validation ok
+                                absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+                                if (absence.getSalarie().getManager() != null){
+                                    sendMail(absence.getSalarie().getManager().getEmail());
+                                }
+                            }
+                            repo.save(absence);
+                            break;
 
-      for (Absence a : absences ){
-
-          if (a instanceof AbsenceChoisie){
-        	  String typeConge = a.getClass().getSimpleName();
-        	  switch(typeConge) {
-        	  	case "CongeSansSolde" :
-        	  		a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-                    repo.save(a);
-        	  		break;
-        	  	case "RttEmploye" :
-        	  		if ((RttEmploye.NOMBRE_MAX - a.getSalarie().getSoldeRTT()) + DateUtils.interval(a) <= RttEmploye.NOMBRE_MAX){
-                        a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-                        repo.save(a);
-                    }else{
-                        a.setStatut(StatutType.REJETEE);
-                        repo.save(a);
+                        default: //nothing to do
                     }
-        	  		break;
-        	  	case "CongePaye" :
-        	  		if ((CongePaye.NOMBRE_MAX - a.getSalarie().getSoldeCP()) + DateUtils.interval(a) <= CongePaye.NOMBRE_MAX){
-                        a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-                        repo.save(a);
-                    }else{
-                        a.setStatut(StatutType.REJETEE);
-                        repo.save(a);
-                    }
-        	  		break;
-        	  		
-        	  }
-
-          }
-      }
+                });
     }
 
-    public void traiterAbsenceObligatoire(){
+    public void traiterAbsenceObligatoire() {
+        repo.findAllByStatut(StatutType.INITIALE).stream()
+                .filter(absence -> absence instanceof AbsenceObligatoire)
+                .forEach(absence -> {
+                    absence.setStatut(StatutType.VALIDEE);
+                    repo.save(absence);
+                });
+    }
 
-        List<Absence>absences=  repo.findAllByStatut(StatutType.INITIALE);
-
-        for (Absence a : absences ){
-            if (a instanceof AbsenceObligatoire){
-                a.setStatut(StatutType.VALIDEE);
-                repo.save(a);
-            }
-        }
+    private void sendMail(String email){
+        //TODO envoi de mail
     }
 
 }

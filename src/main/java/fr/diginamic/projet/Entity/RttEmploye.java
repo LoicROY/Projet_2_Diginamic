@@ -41,7 +41,7 @@ public class RttEmploye extends AbsenceChoisie {
     @Override
     public void isValid() throws AbsenceException {
         super.isValid();
-        if (DateUtils.daysBetween(dateDebut, dateFin) > NOMBRE_MAX) {
+        if (DateUtils.workedDaysBetween(dateDebut, dateFin) > NOMBRE_MAX) {
             throw new AbsenceException("Vous ne pouvez pas poser + de " + NOMBRE_MAX + " jours de Rtt employé");
         }
         if (dateDebut.isAfter(getDateMax())) {
