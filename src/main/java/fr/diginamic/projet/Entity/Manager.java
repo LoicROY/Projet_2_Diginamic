@@ -1,5 +1,7 @@
 package fr.diginamic.projet.Entity;
 
+import fr.diginamic.projet.Exception.SalarieException;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -8,19 +10,19 @@ import java.util.Set;
 @DiscriminatorValue("manager")
 public class Manager extends Salarie{
 
+    public Manager() {
+    }
+
+    public Manager(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) throws SalarieException {
+        super(prenom, nom, email, dateDeNaissance, dateArrivee, password, departement);
+    }
+
     public Manager(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
         super(prenom, nom, email, dateDeNaissance, dateArrivee, password, departement, absences);
     }
 
-    public Manager() {
-    }
-
-    public Manager(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
-        super(id, prenom, nom, email, dateDeNaissance, dateArrivee, password, departement);
-    }
-
-    public Manager(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
-        super(prenom, nom, email, dateDeNaissance, dateArrivee, password, departement);
+    public Manager(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
+        super(id, prenom, nom, email, dateDeNaissance, dateArrivee, password, departement, absences);
     }
 
     @Override

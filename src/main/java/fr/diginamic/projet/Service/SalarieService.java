@@ -9,29 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SalarieService {
-    @Autowired
-    SalarieRepository repo;
+public class SalarieService extends CrudService<Salarie> {
 
-    public List<Salarie> list() {
-        return (List<Salarie>)repo.findAll();
-    }
-
-    public Salarie get(Long id){
-        Optional<Salarie> opt= repo.findById(id);
-        return opt.orElseThrow();
-    }
-
-    public Salarie save(Salarie salarie){
-        return repo.save(salarie);
-    }
-
-    public void delete(Long id){
-        repo.deleteById(id);
-    }
-
-    public void deleteSalarie (Salarie salarie){
-        repo.delete(salarie);
-    }
 
 }

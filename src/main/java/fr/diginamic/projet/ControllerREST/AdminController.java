@@ -9,31 +9,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/administrateur")
 public class AdminController {
 
     @Autowired
     private AdminService service;
 
-    @GetMapping("/administrateur")
+    @GetMapping("")
     public List<Administrateur> listAdmin(){
 
-        return service.list();
+        return service.findAll();
     }
 
-    @GetMapping("/administrateur/create/{id}")
-    public Administrateur updateAdmin(@PathVariable("id")Long id, Model model)throws Exception{
+    @GetMapping("/create/{id}")
+    public Administrateur updateAdmin(@PathVariable("id")Long id){
 
-        return service.get(id);
+        return service.findById(id);
     }
-    @PostMapping("/administrateur/create")
-    public Administrateur PostCreateAdmin(@RequestBody Administrateur administrateur)throws Exception{
+    @PostMapping("/create")
+    public Administrateur PostCreateAdmin(@RequestBody Administrateur administrateur){
 
         administrateur = service.save(administrateur);
 
         return administrateur;
     }
-    @GetMapping("/administrateur/delete/{id}")
-    private void delete(@PathVariable("id") long id)throws Exception{
+    @GetMapping("/delete/{id}")
+    private void delete(@PathVariable("id") long id){
         service.delete(id);
 
     }
