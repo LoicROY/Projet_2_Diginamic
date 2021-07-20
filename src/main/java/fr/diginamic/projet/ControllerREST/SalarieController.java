@@ -20,16 +20,16 @@ public class SalarieController {
     }
 
     @GetMapping("/create/{id}")
-    public Salarie updateSalarie(@PathVariable("id")Long id)throws Exception{
+    public Salarie updateSalarie(@PathVariable("id")Long id){
         return service.findById(id);
     }
     @PostMapping("/create")
-    public Salarie PostCreateSalarie(@RequestBody Salarie salarie)throws Exception{
+    public Salarie PostCreateSalarie(@RequestBody Salarie salarie){
         salarie = service.save(salarie);
         return salarie;
     }
     @GetMapping("/delete/{id}")
-    private void delete(@PathVariable("id") long id)throws Exception{
+    private void delete(@PathVariable("id") long id){
         service.delete(id);
     }
 

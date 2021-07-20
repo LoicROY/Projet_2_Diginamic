@@ -8,30 +8,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
+@RequestMapping("/departement")
 public class DepartementController {
 
     @Autowired
     DepartementService service;
 
-    @GetMapping("/departement")
+    @GetMapping("")
     public List<Departement> listService(){
 
         return service.findAll();
     }
 
-    @GetMapping("/departement/create/{id}")
+    @GetMapping("/create/{id}")
     public Departement updateService(@PathVariable("id")Long id, Model model)throws Exception{
 
         return service.findById(id);
     }
-    @PostMapping("/departement/create")
+    @PostMapping("/create")
     public Departement PostCreateDepartement(@RequestBody Departement departement)throws Exception{
 
         departement = service.save(departement);
 
         return departement;
     }
-    @GetMapping("/departement/delete/{id}")
+    @GetMapping("/delete/{id}")
     private void delete(@PathVariable("id") long id)throws Exception{
         service.delete(id);
 

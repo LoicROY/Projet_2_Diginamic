@@ -54,29 +54,7 @@ public class NightBatchService {
         	  		break;
         	  		
         	  }
-//              if (a instanceof CongeSansSolde){
-//                  a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-//                  repo.save(a);
-//              }
-//              else if (a instanceof RttEmploye){
-//                  if ((RttEmploye.NOMBRE_MAX - a.getSalarie().getSoldeRTT()) + DateUtils.interval(a) <= RttEmploye.NOMBRE_MAX){
-//                      a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-//                      repo.save(a);
-//                  }else{
-//                      a.setStatut(StatutType.REJETEE);
-//                      repo.save(a);
-//                  }
-//              }
-//              else if (a instanceof CongePaye) {
-//
-//                  if ((CongePaye.NOMBRE_MAX - a.getSalarie().getSoldeCP()) + DateUtils.interval(a) <= CongePaye.NOMBRE_MAX){
-//                      a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-//                      repo.save(a);
-//                  }else{
-//                      a.setStatut(StatutType.REJETEE);
-//                      repo.save(a);
-//                  }
-//              }
+
           }
       }
     }
