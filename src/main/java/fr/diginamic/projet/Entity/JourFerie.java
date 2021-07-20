@@ -11,18 +11,18 @@ import java.time.LocalDate;
 @DiscriminatorValue("jour_ferie")
 public class JourFerie extends AbsenceObligatoire {
 
-    public JourFerie() throws AbsenceException {
+    public JourFerie() {
     }
 
-    public JourFerie(LocalDate date, String libelle) throws AbsenceException {
+    public JourFerie(LocalDate date, String libelle) {
         super(date, libelle);
     }
 
-    public JourFerie(StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    public JourFerie(StatutType statut, LocalDate date, String libelle) {
         super(statut, date, libelle);
     }
 
-    public JourFerie(Long id, StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    public JourFerie(Long id, StatutType statut, LocalDate date, String libelle) {
         super(id, statut, date, libelle);
     }
 

@@ -15,18 +15,18 @@ public class RttEmployeur extends AbsenceObligatoire {
 
     public static final int NOMBRE_MAX = 25;
 
-    public RttEmployeur() throws AbsenceException {
+    public RttEmployeur() {
     }
 
-    public RttEmployeur(LocalDate date, String libelle) throws AbsenceException {
+    public RttEmployeur(LocalDate date, String libelle) {
         super(date, libelle);
     }
 
-    public RttEmployeur(StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    public RttEmployeur(StatutType statut, LocalDate date, String libelle) {
         super(statut, date, libelle);
     }
 
-    public RttEmployeur(Long id, StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    public RttEmployeur(Long id, StatutType statut, LocalDate date, String libelle) {
         super(id, statut, date, libelle);
     }
 

@@ -11,18 +11,18 @@ import java.time.LocalDate;
 @DiscriminatorValue("conge_sans_solde")
 public class CongeSansSolde extends AbsenceChoisie {
 
-    public CongeSansSolde() throws AbsenceException {
+    public CongeSansSolde() {
     }
 
-    public CongeSansSolde(LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongeSansSolde(LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(dateDebut, dateFin, motif);
     }
 
-    public CongeSansSolde(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongeSansSolde(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(statut, dateDebut, dateFin, motif);
     }
 
-    public CongeSansSolde(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongeSansSolde(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(id, statut, dateDebut, dateFin, motif);
     }
 

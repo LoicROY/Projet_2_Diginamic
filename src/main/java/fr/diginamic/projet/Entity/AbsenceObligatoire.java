@@ -18,19 +18,19 @@ public abstract class AbsenceObligatoire extends Absence {
     @Column(name = "libelle")
     protected String libelle;
 
-    protected AbsenceObligatoire() throws AbsenceException {
+    protected AbsenceObligatoire() {
         this(null, null, null, null);
     }
 
-    protected AbsenceObligatoire(LocalDate date, String libelle) throws AbsenceException {
+    protected AbsenceObligatoire(LocalDate date, String libelle) {
         this(null, null, date, libelle);
     }
 
-    protected AbsenceObligatoire(StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    protected AbsenceObligatoire(StatutType statut, LocalDate date, String libelle) {
         this(null, statut, date, libelle);
     }
 
-    protected AbsenceObligatoire(Long id, StatutType statut, LocalDate date, String libelle) throws AbsenceException {
+    protected AbsenceObligatoire(Long id, StatutType statut, LocalDate date, String libelle) {
         super(id, statut);
         this.date = date;
         if (date != null){

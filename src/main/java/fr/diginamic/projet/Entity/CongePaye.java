@@ -7,7 +7,6 @@ import fr.diginamic.projet.Utils.DateUtils;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @DiscriminatorValue("conge_paye")
@@ -15,19 +14,24 @@ public class CongePaye extends AbsenceChoisie {
 
     public static final int NOMBRE_MAX = 25;
 
-    public CongePaye() throws AbsenceException {
+    public CongePaye() {
     }
 
-    public CongePaye(LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongePaye(LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(dateDebut, dateFin, motif);
     }
 
-    public CongePaye(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongePaye(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(statut, dateDebut, dateFin, motif);
     }
 
-    public CongePaye(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public CongePaye(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(id, statut, dateDebut, dateFin, motif);
+    }
+
+    public CongePaye(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif, Salarie salarie) {
+        super(id, statut, dateDebut, dateFin, motif);
+        this.salarie = salarie;
     }
 
     @Override

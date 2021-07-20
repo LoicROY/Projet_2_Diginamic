@@ -23,12 +23,20 @@ public abstract class CrudService<T> {
         return crudRepository.save(t);
     }
 
+    public List<T> saveAll(Iterable<T> iterable) {
+        return (List<T>) crudRepository.saveAll(iterable);
+    }
+
     public void delete(Long id) {
         crudRepository.deleteById(id);
     }
 
     public void delete(T t) {
         crudRepository.delete(t);
+    }
+
+    public void deleteAll() {
+        crudRepository.deleteAll();
     }
 
 }

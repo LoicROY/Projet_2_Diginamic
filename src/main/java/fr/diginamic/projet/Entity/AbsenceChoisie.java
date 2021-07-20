@@ -17,19 +17,19 @@ public abstract class AbsenceChoisie extends Absence {
     @Column(name = "motif")
     protected String motif;
 
-    protected AbsenceChoisie() throws AbsenceException {
+    protected AbsenceChoisie() {
         super();
     }
 
-    protected AbsenceChoisie(LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    protected AbsenceChoisie(LocalDate dateDebut, LocalDate dateFin, String motif) {
         this(null, null, dateDebut, dateFin, motif);
     }
 
-    protected AbsenceChoisie(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    protected AbsenceChoisie(StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         this(null, statut, dateDebut, dateFin, motif);
     }
 
-    public AbsenceChoisie(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) throws AbsenceException {
+    public AbsenceChoisie(Long id, StatutType statut, LocalDate dateDebut, LocalDate dateFin, String motif) {
         super(id, statut);
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
