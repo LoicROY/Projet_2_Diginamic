@@ -11,9 +11,12 @@ public class Departement extends BasedEntity {
     @Column(name = "libelle", nullable = false)
     protected String libelle;
 
+    public Departement() {
+        this(null,null);
+    }
 
     public Departement(String libelle) {
-        this.libelle = libelle;
+        this(null,libelle);
     }
 
     public Departement(Long id, String libelle) {
@@ -21,8 +24,7 @@ public class Departement extends BasedEntity {
         this.libelle = libelle;
     }
 
-    public Departement() {
-    }
+
 
     public String getLibelle() {
         return libelle;

@@ -17,13 +17,13 @@ public class AdminController {
     @GetMapping("/administrateur")
     public List<Administrateur> listAdmin(){
 
-        return service.list();
+        return service.findAll();
     }
 
     @GetMapping("/administrateur/create/{id}")
     public Administrateur updateAdmin(@PathVariable("id")Long id, Model model)throws Exception{
 
-        return service.get(id);
+        return service.findById(id);
     }
     @PostMapping("/administrateur/create")
     public Administrateur PostCreateAdmin(@RequestBody Administrateur administrateur)throws Exception{

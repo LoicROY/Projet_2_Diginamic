@@ -4,6 +4,7 @@ import fr.diginamic.projet.Entity.*;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Repository.AbsenceRepository;
+import fr.diginamic.projet.Utils.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,13 @@ public class NightBatchService {
       for (Absence a : absences ){
 
           if (a instanceof AbsenceChoisie){
+
               if (a instanceof CongeSansSolde){
                   a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
                   repo.save(a);
               }
               else if (a instanceof RttEmploye){
-                  if ((RttEmploye.NOMBRE_MAX - a.getSalarie().getSoldeRTT()) +  ChronoUnit.DAYS.between(((RttEmploye) a).getDateDebut(), ((RttEmploye) a).getDateFin())<=RttEmploye.NOMBRE_MAX){
+                  if ((RttEmploye.NOMBRE_MAX - a.getSalarie().getSoldeRTT()) + DateUtils.interval(a) <= RttEmploye.NOMBRE_MAX){
                       a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
                       repo.save(a);
                   }else{
@@ -43,11 +45,8 @@ public class NightBatchService {
                   }
               }
               else if (a instanceof CongePaye) {
-                  logger.warn(CongePaye.NOMBRE_MAX);
-                  logger.warn(a.getSalarie().getSoldeCP());
-                  logger.warn(ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin()));
 
-                  if ((CongePaye.NOMBRE_MAX - a.getSalarie().getSoldeCP()) +  ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin())<=CongePaye.NOMBRE_MAX){
+                  if ((CongePaye.NOMBRE_MAX - a.getSalarie().getSoldeCP()) + DateUtils.interval(a) <= CongePaye.NOMBRE_MAX){
                       a.setStatut(StatutType.EN_ATTENTE_VALIDATION);
                       repo.save(a);
                   }else{

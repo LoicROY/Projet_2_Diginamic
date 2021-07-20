@@ -10,33 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ManagerService {
-    @Autowired
-    ManagerRepository repo;
+public class ManagerService extends CrudService<Manager> {
 
-    public List<Manager> list() {
-        return (List<Manager>)repo.findAll();
-    }
-
-    public Manager get(Long id){
-        Optional<Manager> opt= repo.findById(id);
-
-        return opt.orElseThrow();
-
-
-    }
-
-    public Manager save(Manager manager){
-        return repo.save(manager);
-    }
-
-
-    public void delete(Long id){
-        repo.deleteById(id);
-    }
-    public void deleteManager (Manager manager){
-        repo.delete(manager);
-    }
 
 
 }

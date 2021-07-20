@@ -1,6 +1,7 @@
 package fr.diginamic.projet.Entity;
 
 import fr.diginamic.projet.Exception.AbsenceException;
+import fr.diginamic.projet.Exception.SalarieException;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -42,41 +43,18 @@ public class Salarie extends BasedEntity {
     @OneToMany(mappedBy = "salarie")
     protected Set<Absence> absences = new HashSet<>();
 
-    public double getSoldeRTT() throws AbsenceException {
-        double cpt=0;
-        for (Absence a :absences){
-            if (a instanceof RttEmploye){
-                cpt+= ChronoUnit.DAYS.between(((RttEmploye) a).getDateDebut(), ((RttEmploye) a).getDateFin());
-            }
-        }
-        return RttEmploye.NOMBRE_MAX - cpt;
-    }
-
-    public double getSoldeCP(){
-        double cpt=0;
-        for (Absence a :absences){
-            if (a instanceof CongePaye){
-             cpt += ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin());
-            }
-        }
-        return CongePaye.NOMBRE_MAX - cpt;
-    }
-
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.dateDeNaissance = dateDeNaissance;
-        this.dateArrivee = dateArrivee;
-        this.password = password;
-        this.departement = departement;
-        this.absences = absences;
-    }
 
     public Salarie() {
+        this(null,null,null,null,null,null,null,null,null);
     }
+    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement)  {
+        this(null,prenom,nom,email,dateDeNaissance,dateArrivee,password,departement,null);
+    }
+    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
+        this(null,prenom,nom,email,dateDeNaissance,dateArrivee,password,departement,absences);
 
-    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
+    }
+    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement,Set<Absence> absences) {
         super(id);
         this.prenom = prenom;
         this.nom = nom;
@@ -85,16 +63,7 @@ public class Salarie extends BasedEntity {
         this.dateArrivee = dateArrivee;
         this.password = password;
         this.departement = departement;
-    }
-
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement) {
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.dateDeNaissance = dateDeNaissance;
-        this.dateArrivee = dateArrivee;
-        this.password = password;
-        this.departement = departement;
+        this.absences=absences;
     }
 
     public String getPrenom() {
@@ -159,6 +128,27 @@ public class Salarie extends BasedEntity {
 
     public void setAbsences(Set<Absence> absences) {
         this.absences = absences;
+    }
+
+
+    public double getSoldeRTT() {
+        double cpt=0;
+        for (Absence a :absences){
+            if (a instanceof RttEmploye){
+                cpt+= ChronoUnit.DAYS.between(((RttEmploye) a).getDateDebut(), ((RttEmploye) a).getDateFin());
+            }
+        }
+        return RttEmploye.NOMBRE_MAX - cpt;
+    }
+
+    public double getSoldeCP(){
+        double cpt=0;
+        for (Absence a :absences){
+            if (a instanceof CongePaye){
+                cpt += ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin());
+            }
+        }
+        return CongePaye.NOMBRE_MAX - cpt;
     }
 
     public void addAbsence(Absence absence) {

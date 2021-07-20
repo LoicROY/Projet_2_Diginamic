@@ -16,13 +16,13 @@ public class ManagerController {
     @GetMapping("/manager")
     public List<Manager> listManager(){
 
-        return service.list();
+        return service.findAll();
     }
 
     @GetMapping("/manager/create/{id}")
     public Manager update(@PathVariable("id")Long id, Model model)throws Exception{
 
-        return service.get(id);
+        return service.findById(id);
     }
     @PostMapping("/manager/create")
     public Manager PostCreateManager(@RequestBody Manager manager)throws Exception{

@@ -1,5 +1,8 @@
 package fr.diginamic.projet.Utils;
 
+import fr.diginamic.projet.Entity.Absence;
+import fr.diginamic.projet.Entity.CongePaye;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,5 +25,8 @@ public final class DateUtils {
 
     public static boolean isSaturdayOrSunday(LocalDate localDate){
         return localDate.getDayOfWeek().equals(DayOfWeek.SATURDAY) || localDate.getDayOfWeek().equals(DayOfWeek.SUNDAY);
+    }
+    public static long interval(Absence absence){
+        return ChronoUnit.DAYS.between(((CongePaye) absence).getDateDebut(), ((CongePaye) absence).getDateFin());
     }
 }

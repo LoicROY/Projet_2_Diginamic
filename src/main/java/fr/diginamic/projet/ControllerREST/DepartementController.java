@@ -16,13 +16,13 @@ public class DepartementController {
     @GetMapping("/departement")
     public List<Departement> listService(){
 
-        return service.list();
+        return service.findAll();
     }
 
     @GetMapping("/departement/create/{id}")
     public Departement updateService(@PathVariable("id")Long id, Model model)throws Exception{
 
-        return service.get(id);
+        return service.findById(id);
     }
     @PostMapping("/departement/create")
     public Departement PostCreateDepartement(@RequestBody Departement departement)throws Exception{
