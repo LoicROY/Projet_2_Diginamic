@@ -2,13 +2,11 @@ package fr.diginamic.projet.Service;
 
 import fr.diginamic.projet.Entity.*;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
-import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Repository.AbsenceRepository;
 import fr.diginamic.projet.Utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Properties;
 
 @Service
 public class NightBatchService {
@@ -22,7 +20,7 @@ public class NightBatchService {
     private final String JOUR_FERIE = "JourFerie";
 
 
-    public void traiterAbsenceChoisie() throws AbsenceException {
+    public void traiterAbsenceChoisie() {
         repo.findAllByStatut(StatutType.INITIALE).forEach( absence -> {
                     switch (absence.getClass().getSimpleName()) {
 
@@ -32,31 +30,11 @@ public class NightBatchService {
                             break;
 
                         case CONGE_PAYE:
-                            AbsenceChoisie a = (AbsenceChoisie) absence;
-                            if (a.getSalarie().getSoldeCP() < DateUtils.workedDaysBetween(a.getDateDebut(), a.getDateFin())) {
-                                //pas suffisament de jours disponibles
-                                absence.setStatut(StatutType.REJETEE);
-                            } else { //validation ok
-                                absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-                                if (absence.getSalarie().getManager() != null){
-                                    sendMail(absence.getSalarie().getManager().getEmail());
-                                }
-                            }
-                            repo.save(absence);
+                            check((AbsenceChoisie) absence, absence.getSalarie().getSoldeCP());
                             break;
 
                         case RTT_EMPLOYE:
-                            AbsenceChoisie b = (AbsenceChoisie) absence;
-                            if (b.getSalarie().getSoldeRTT() < DateUtils.workedDaysBetween(b.getDateDebut(), b.getDateFin())) {
-                                //pas suffisament de jours disponibles
-                                absence.setStatut(StatutType.REJETEE);
-                            } else { //validation ok
-                                absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
-                                if (absence.getSalarie().getManager() != null){
-                                    sendMail(absence.getSalarie().getManager().getEmail());
-                                }
-                            }
-                            repo.save(absence);
+                            check((AbsenceChoisie) absence, absence.getSalarie().getSoldeRTT());
                             break;
 
                         default: //nothing to do
@@ -74,8 +52,21 @@ public class NightBatchService {
                 });
     }
 
-    private void sendMail(String email){
+    private void check(AbsenceChoisie absence, Long joursRestants) {
+        if (joursRestants < DateUtils.workedDaysBetween(absence.getDateDebut(), absence.getDateFin())) {
+            //pas suffisament de jours disponibles
+            absence.setStatut(StatutType.REJETEE);
+        } else { //validation ok
+            absence.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+            if (absence.getSalarie().getManager() != null){
+                sendMail(absence.getSalarie().getManager().getEmail());
+            }
+        }
+        repo.save(absence);
+    }
 
+    private void sendMail(String email){
+        //TODO
     }
 
 }

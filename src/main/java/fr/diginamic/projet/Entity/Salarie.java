@@ -1,19 +1,17 @@
 package fr.diginamic.projet.Entity;
 
-import fr.diginamic.projet.Exception.AbsenceException;
-import fr.diginamic.projet.Exception.SalarieException;
+import fr.diginamic.projet.Utils.DateUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "salarie")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminant",discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "discriminant", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("salarie")
 public class Salarie extends BasedEntity {
 
@@ -49,16 +47,14 @@ public class Salarie extends BasedEntity {
 
 
     public Salarie() {
-        this(null,null,null,null,null,null,null,null,null);
+        super();
     }
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement)  {
-        this(null,prenom,nom,email,dateDeNaissance,dateArrivee,password,departement,null);
-    }
-    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement, Set<Absence> absences) {
-        this(null,prenom,nom,email,dateDeNaissance,dateArrivee,password,departement,absences);
 
+    public Salarie(String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password) {
+        this(null, prenom, nom, email, dateDeNaissance, dateArrivee, password);
     }
-    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password, Departement departement,Set<Absence> absences) {
+
+    public Salarie(Long id, String prenom, String nom, String email, LocalDate dateDeNaissance, LocalDate dateArrivee, String password) {
         super(id);
         this.prenom = prenom;
         this.nom = nom;
@@ -66,8 +62,6 @@ public class Salarie extends BasedEntity {
         this.dateDeNaissance = dateDeNaissance;
         this.dateArrivee = dateArrivee;
         this.password = password;
-        this.departement = departement;
-        this.absences=absences;
     }
 
     public String getPrenom() {
@@ -143,24 +137,24 @@ public class Salarie extends BasedEntity {
     }
 
 
-    public double getSoldeRTT() {
-        double cpt=0;
-        for (Absence a :absences){
-            if (a instanceof RttEmploye){
-                cpt+= ChronoUnit.DAYS.between(((RttEmploye) a).getDateDebut(), ((RttEmploye) a).getDateFin());
-            }
-        }
-        return RttEmploye.NOMBRE_MAX - cpt;
+    public long getSoldeRTT() {
+        return RttEmploye.NOMBRE_MAX - absences.stream()
+                .filter(absence -> absence instanceof RttEmploye)
+                .mapToLong(value -> DateUtils.workedDaysBetween(
+                        ((RttEmploye) value).getDateDebut(),
+                        ((RttEmploye) value).getDateFin()
+                ))
+                .sum();
     }
 
-    public double getSoldeCP(){
-        double cpt=0;
-        for (Absence a :absences){
-            if (a instanceof CongePaye){
-                cpt += ChronoUnit.DAYS.between(((CongePaye) a).getDateDebut(), ((CongePaye) a).getDateFin());
-            }
-        }
-        return CongePaye.NOMBRE_MAX - cpt;
+    public long getSoldeCP() {
+        return CongePaye.NOMBRE_MAX - absences.stream()
+                .filter(absence -> absence instanceof CongePaye)
+                .mapToLong(value -> DateUtils.workedDaysBetween(
+                        ((CongePaye) value).getDateDebut(),
+                        ((CongePaye) value).getDateFin()
+                ))
+                .sum();
     }
 
     public void addAbsence(Absence absence) {
