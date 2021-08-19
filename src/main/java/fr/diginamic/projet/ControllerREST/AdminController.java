@@ -1,9 +1,9 @@
 package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.Administrateur;
+import fr.diginamic.projet.Exception.AlgorithmException;
 import fr.diginamic.projet.Service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,18 +22,22 @@ public class AdminController {
         return service.findAll();
     }
 
-    @GetMapping("/create/{id}")
-    public Administrateur updateAdmin(@PathVariable("id")Long id){
-
-        return service.findById(id);
-    }
     @PostMapping("/create")
-    public Administrateur PostCreateAdmin(@RequestBody Administrateur administrateur){
-
-        administrateur = service.save(administrateur);
-
-        return administrateur;
+    public Administrateur create(@RequestBody Administrateur administrateur) throws AlgorithmException {
+        if (administrateur.getId() != null){
+            throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
+        }
+        return service.save(administrateur);
     }
+
+    @PutMapping("/update")
+    public Administrateur update(@RequestBody Administrateur administrateur) throws AlgorithmException {
+        if (administrateur.getId() == null){
+            throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
+        }
+        return service.save(administrateur);
+    }
+
     @GetMapping("/delete/{id}")
     private void delete(@PathVariable("id") long id){
         service.delete(id);
