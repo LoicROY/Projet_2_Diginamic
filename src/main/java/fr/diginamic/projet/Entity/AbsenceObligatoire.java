@@ -1,30 +1,41 @@
 package fr.diginamic.projet.Entity;
 
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
+import fr.diginamic.projet.Exception.AbsenceException;
 
+import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class AbsenceObligatoire extends Absence {
+@MappedSuperclass
+public abstract class AbsenceObligatoire extends Absence {
 
+    @Column(name = "date_absence")
     protected LocalDate date;
-    protected LocalDate jour;
+    @Column(name = "jour")
+    @Enumerated(value = EnumType.STRING)
+    protected DayOfWeek jour;
+    @Column(name = "libelle")
     protected String libelle;
 
     protected AbsenceObligatoire() {
+        this(null, null, null, null);
     }
 
-    protected AbsenceObligatoire(LocalDate date, LocalDate jour, String libelle) {
-        this(null, null, date, jour, libelle);
+    protected AbsenceObligatoire(LocalDate date, String libelle) {
+        this(null, null, date, libelle);
     }
 
-    protected AbsenceObligatoire(StatutType statut, LocalDate date, LocalDate jour, String libelle) {
-        this(null, statut, date, jour, libelle);
+    protected AbsenceObligatoire(StatutType statut, LocalDate date, String libelle) {
+        this(null, statut, date, libelle);
     }
 
-    protected AbsenceObligatoire(Long id, StatutType statut, LocalDate date, LocalDate jour, String libelle) {
+    protected AbsenceObligatoire(Long id, StatutType statut, LocalDate date, String libelle) {
         super(id, statut);
         this.date = date;
-        this.jour = jour;
+        if (date != null){
+            this.jour = date.getDayOfWeek();
+        }
         this.libelle = libelle;
     }
 
@@ -36,11 +47,11 @@ public class AbsenceObligatoire extends Absence {
         this.date = date;
     }
 
-    public LocalDate getJour() {
+    public DayOfWeek getJour() {
         return jour;
     }
 
-    public void setJour(LocalDate jour) {
+    public void setJour(DayOfWeek jour) {
         this.jour = jour;
     }
 
@@ -50,6 +61,10 @@ public class AbsenceObligatoire extends Absence {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    @Override
+    public void isValid() throws AbsenceException {
     }
 
     @Override
