@@ -190,9 +190,8 @@ public class Salarie extends BasedEntity implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of();
+        return List.of(() -> "ROLE_SALARIE");
     }
 
     @Override

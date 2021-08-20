@@ -24,7 +24,7 @@ public class SalarieController {
         return service.findAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public Salarie create(@RequestBody Salarie salarie) throws AlgorithmException {
         if (salarie.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -33,15 +33,16 @@ public class SalarieController {
         return service.save(salarie);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public Salarie update(@RequestBody Salarie salarie) throws AlgorithmException {
         if (salarie.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
         }
+        salarie.setPassword(passwordEncoder.encode(salarie.getPassword()));
         return service.save(salarie);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     private void delete(@PathVariable("id") long id){
         service.delete(id);
     }

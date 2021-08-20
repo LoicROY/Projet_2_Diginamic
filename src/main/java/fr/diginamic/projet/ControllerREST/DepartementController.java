@@ -18,24 +18,21 @@ public class DepartementController {
 
     @GetMapping("")
     public List<Departement> listService(){
-
         return service.findAll();
     }
 
-    @GetMapping("/create/{id}")
-    public Departement updateService(@PathVariable("id")Long id, Model model)throws Exception{
-
+    @GetMapping("/{id}")
+    public Departement updateService(@PathVariable("id")Long id, Model model){
         return service.findById(id);
     }
-    @PostMapping("/create")
-    public Departement PostCreateDepartement(@RequestBody Departement departement)throws Exception{
 
-        departement = service.save(departement);
-
-        return departement;
+    @PostMapping("")
+    public Departement PostCreateDepartement(@RequestBody Departement departement){
+        return service.save(departement);
     }
-    @GetMapping("/delete/{id}")
-    private void delete(@PathVariable("id") long id)throws Exception{
+
+    @DeleteMapping("/{id}")
+    private void delete(@PathVariable("id") long id){
         service.delete(id);
 
     }

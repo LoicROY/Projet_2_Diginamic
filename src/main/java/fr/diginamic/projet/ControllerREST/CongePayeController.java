@@ -29,7 +29,7 @@ public class CongePayeController {
         return congePayeService.findById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public CongePaye create(@RequestBody CongePaye congePaye) throws AlgorithmException, AbsenceException {
         if (congePaye.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -39,7 +39,7 @@ public class CongePayeController {
         return congePayeService.save(congePaye);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public CongePaye update(@RequestBody CongePaye congePaye) throws AlgorithmException, AbsenceException {
         if (congePaye.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
@@ -48,12 +48,12 @@ public class CongePayeController {
         return congePayeService.save(congePaye);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void delete(@RequestBody CongePaye congePaye) {
         congePayeService.delete(congePaye);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         congePayeService.delete(id);
     }

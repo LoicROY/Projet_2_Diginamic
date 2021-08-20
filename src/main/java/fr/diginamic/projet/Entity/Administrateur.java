@@ -1,7 +1,11 @@
 package fr.diginamic.projet.Entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("administrateur")
@@ -33,5 +37,10 @@ public class Administrateur extends Salarie {
                 ", manager=" + manager.getId() +
                 ", absences=" + absences +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return List.of(() -> "ROLE_ADMIN");
     }
 }

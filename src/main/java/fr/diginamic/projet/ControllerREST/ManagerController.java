@@ -4,6 +4,7 @@ import fr.diginamic.projet.Entity.Manager;
 import fr.diginamic.projet.Exception.AlgorithmException;
 import fr.diginamic.projet.Service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,34 +13,38 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/manager")
 public class ManagerController {
+
     @Autowired
     private ManagerService service;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("")
     public List<Manager> listManager(){
         return service.findAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public Manager create(@RequestBody Manager manager) throws AlgorithmException {
         if (manager.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
         }
+        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
         return service.save(manager);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public Manager update(@RequestBody Manager manager) throws AlgorithmException {
         if (manager.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
         }
+        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
         return service.save(manager);
     }
 
-    @GetMapping("/delete/{id}")
-    private void delete(@PathVariable("id") long id)throws Exception{
+    @DeleteMapping("/{id}")
+    private void delete(@PathVariable("id") long id){
         service.delete(id);
-
     }
 
 
