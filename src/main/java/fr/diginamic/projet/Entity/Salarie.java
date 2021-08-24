@@ -189,6 +189,11 @@ public class Salarie extends BasedEntity implements UserDetails {
                 '}';
     }
 
+
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
         return List.of(() -> "ROLE_SALARIE");
