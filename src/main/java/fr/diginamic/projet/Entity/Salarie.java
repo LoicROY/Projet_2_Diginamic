@@ -1,11 +1,15 @@
 package fr.diginamic.projet.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.diginamic.projet.Utils.DateUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +17,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminant", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("salarie")
-public class Salarie extends BasedEntity {
+public class Salarie extends BasedEntity implements UserDetails {
 
     @Column(name = "prenom", nullable = false)
     protected String prenom;
@@ -21,7 +25,7 @@ public class Salarie extends BasedEntity {
     @Column(name = "nom", nullable = false)
     protected String nom;
 
-    @Column(name = "email", length = 100, nullable = false)
+    @Column(name = "email", length = 100, nullable = false, unique = true)
     protected String email;
 
     @Column(name = "date_naissance", nullable = false)
@@ -39,7 +43,7 @@ public class Salarie extends BasedEntity {
     protected Departement departement;
 
     @ManyToOne
-    @JoinColumn(name = "id_manager", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_manager", referencedColumnName = "id")
     protected Manager manager;
 
     @OneToMany(mappedBy = "salarie")
@@ -104,9 +108,9 @@ public class Salarie extends BasedEntity {
         this.dateArrivee = dateArrivee;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -183,5 +187,50 @@ public class Salarie extends BasedEntity {
                 ", manager=" + manager.getId() +
                 ", absences=" + absences +
                 '}';
+    }
+
+
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return List.of(() -> "ROLE_SALARIE");
+    }
+
+    @Override
+    public String getPassword(){
+        return password;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername(){
+        return getEmail();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired(){
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked(){
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired(){
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled(){
+        return true;
     }
 }

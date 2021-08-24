@@ -19,8 +19,8 @@ public class BatchController {
     private static final String EUROPE_PARIS = "Europe/Paris";
 
 
-    @Scheduled(cron = "0 0 0 * * ?", zone = EUROPE_PARIS)
-//    @Scheduled(cron = "@midnight", zone = EUROPE_PARIS)
+//    @Scheduled(cron = "0 0 0 * * ?", zone = EUROPE_PARIS)
+    @Scheduled(cron = "@midnight", zone = EUROPE_PARIS)
     @GetMapping("/batch")
     public void traiter() {
         service.traiterAbsenceChoisie();

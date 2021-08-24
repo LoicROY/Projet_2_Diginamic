@@ -29,7 +29,7 @@ public class JourFerieController {
         return jourFerieService.findById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public JourFerie create(@RequestBody JourFerie jourFerie) throws AlgorithmException, AbsenceException {
         if (jourFerie.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -39,7 +39,7 @@ public class JourFerieController {
         return jourFerieService.save(jourFerie);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public JourFerie update(@RequestBody JourFerie jourFerie) throws AlgorithmException, AbsenceException {
         if (jourFerie.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
@@ -48,12 +48,12 @@ public class JourFerieController {
         return jourFerieService.save(jourFerie);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void delete(@RequestBody JourFerie jourFerie) {
         jourFerieService.delete(jourFerie);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         jourFerieService.delete(id);
     }

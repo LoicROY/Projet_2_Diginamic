@@ -66,4 +66,8 @@ public abstract class Absence extends BasedEntity {
                 ", id=" + id +
                 '}';
     }
+
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
 }

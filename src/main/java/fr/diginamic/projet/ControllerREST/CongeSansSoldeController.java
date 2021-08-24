@@ -29,7 +29,7 @@ public class CongeSansSoldeController {
         return congeSansSoldeService.findById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public CongeSansSolde create(@RequestBody CongeSansSolde congeSansSolde) throws AlgorithmException, AbsenceException {
         if (congeSansSolde.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -39,7 +39,7 @@ public class CongeSansSoldeController {
         return congeSansSoldeService.save(congeSansSolde);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public CongeSansSolde update(@RequestBody CongeSansSolde congeSansSolde) throws AlgorithmException, AbsenceException {
         if (congeSansSolde.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
@@ -48,12 +48,12 @@ public class CongeSansSoldeController {
         return congeSansSoldeService.save(congeSansSolde);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void delete(@RequestBody CongeSansSolde congePaye) {
         congeSansSoldeService.delete(congePaye);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         congeSansSoldeService.delete(id);
     }

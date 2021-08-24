@@ -29,7 +29,7 @@ public class CongeAnticipeController {
         return congeAnticipeService.findById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public CongeAnticipe create(@RequestBody CongeAnticipe congeAnticipe) throws AlgorithmException, AbsenceException {
         if (congeAnticipe.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -39,7 +39,7 @@ public class CongeAnticipeController {
         return congeAnticipeService.save(congeAnticipe);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public CongeAnticipe update(@RequestBody CongeAnticipe congeAnticipe) throws AlgorithmException, AbsenceException {
         if (congeAnticipe.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
@@ -48,12 +48,12 @@ public class CongeAnticipeController {
         return congeAnticipeService.save(congeAnticipe);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void delete(@RequestBody CongeAnticipe congeAnticipe) {
         congeAnticipeService.delete(congeAnticipe);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         congeAnticipeService.delete(id);
     }

@@ -29,7 +29,7 @@ public class RttEmployeurController {
         return rttEmployeurService.findById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public RttEmployeur create(@RequestBody RttEmployeur rttEmployeur) throws AlgorithmException, AbsenceException {
         if (rttEmployeur.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
@@ -39,7 +39,7 @@ public class RttEmployeurController {
         return rttEmployeurService.save(rttEmployeur);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public RttEmployeur update(@RequestBody RttEmployeur rttEmployeur) throws AlgorithmException, AbsenceException {
         if (rttEmployeur.getId() == null){
             throw new AlgorithmException("id = null ! Vous allez créer au lieu de modifier");
@@ -48,12 +48,12 @@ public class RttEmployeurController {
         return rttEmployeurService.save(rttEmployeur);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void delete(@RequestBody RttEmployeur rttEmployeur) {
         rttEmployeurService.delete(rttEmployeur);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") Long id) {
         rttEmployeurService.delete(id);
     }
