@@ -47,13 +47,4 @@ public class SalarieController {
         service.delete(id);
     }
 
-    @GetMapping("/getSoldeCp")
-    private double getSoldeCP(){
-        return new Salarie().getSoldeCP();
-    }
-
-    @GetMapping("/getSoldeRtt")
-    private double getSoldeRTT(){
-        return new Salarie().getSoldeRTT();
-    }
 }
