@@ -2,18 +2,21 @@ package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.RttEmployeur;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
+import fr.diginamic.projet.Entity.Salarie;
 import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Exception.AlgorithmException;
 import fr.diginamic.projet.Service.RttEmployeurService;
 import fr.diginamic.projet.Validator.AbsenceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/rttEmployeur")
+@RequestMapping("/RttEmployeur")
 public class RttEmployeurController {
 
     @Autowired
@@ -36,6 +39,9 @@ public class RttEmployeurController {
         }
         AbsenceValidator.isValid(rttEmployeur);
         rttEmployeur.setStatut(StatutType.INITIALE);
+        Salarie userCurrent = (Salarie) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userCurrent.setAbsences(new HashSet<>());
+        rttEmployeur.setSalarie(userCurrent);
         return rttEmployeurService.save(rttEmployeur);
     }
 

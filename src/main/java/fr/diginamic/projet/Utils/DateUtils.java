@@ -20,7 +20,7 @@ import java.util.List;
 public final class DateUtils {
 
     private static AbsenceObligatoireService absenceObligatoireService;
-    private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
+    private static final String DEFAULT_FORMAT = "yyyy-MM-dd";
 
     @Autowired
     public void setAbsenceObligatoireService(AbsenceObligatoireService absenceObligatoireService){

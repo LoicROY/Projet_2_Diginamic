@@ -2,18 +2,21 @@ package fr.diginamic.projet.ControllerREST;
 
 import fr.diginamic.projet.Entity.CongePaye;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
+import fr.diginamic.projet.Entity.Salarie;
 import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Exception.AlgorithmException;
 import fr.diginamic.projet.Service.CongePayeService;
 import fr.diginamic.projet.Validator.AbsenceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/congePaye")
+@RequestMapping("/CongePaye")
 public class CongePayeController {
 
     @Autowired
@@ -35,7 +38,10 @@ public class CongePayeController {
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
         }
         AbsenceValidator.isValid(congePaye);
-        congePaye.setStatut(StatutType.INITIALE);
+        congePaye.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+        Salarie userCurrent = (Salarie) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userCurrent.setAbsences(new HashSet<>());
+        congePaye.setSalarie(userCurrent);
         return congePayeService.save(congePaye);
     }
 
