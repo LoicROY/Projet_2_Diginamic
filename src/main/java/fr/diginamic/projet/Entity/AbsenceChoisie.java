@@ -69,7 +69,7 @@ public abstract class AbsenceChoisie extends Absence {
             throw new AbsenceException("La date de début doit être après aujourd'hui");
         }
         if (DateUtils.isSaturdayOrSunday(dateDebut) || DateUtils.isSaturdayOrSunday(dateFin)) {
-            throw new AbsenceException("Vous ne pouvez pas poser d'absence qui commence ou finis un week end'");
+            throw new AbsenceException("Vous ne pouvez pas poser d'absence qui commence ou finis un week end");
         }
     }
 
