@@ -1,5 +1,7 @@
 package fr.diginamic.projet.Entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.diginamic.projet.Entity.Enumeration.StatutType;
 import fr.diginamic.projet.Exception.AbsenceException;
 import fr.diginamic.projet.Utils.DateUtils;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 public abstract class AbsenceChoisie extends Absence {
 
     @Column(name = "date_debut")
+    @JsonProperty(required = true)
     protected LocalDate dateDebut;
     @Column(name = "date_fin")
     protected LocalDate dateFin;
@@ -62,6 +65,9 @@ public abstract class AbsenceChoisie extends Absence {
 
     @Override
     public void isValid() throws AbsenceException {
+        if (dateDebut == null || dateFin == null){
+            throw new AbsenceException("Les dates de début et de fin doivent être valorisées");
+        }
         if (dateFin.isBefore(dateDebut)){
             throw new AbsenceException("La date de fin ne peut pas être avant la date de début");
         }

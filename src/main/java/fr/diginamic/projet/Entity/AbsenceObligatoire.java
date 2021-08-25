@@ -65,6 +65,9 @@ public abstract class AbsenceObligatoire extends Absence {
 
     @Override
     public void isValid() throws AbsenceException {
+        if (date == null){
+            throw new AbsenceException("La date doit être valorisée");
+        }
     }
 
     @Override
