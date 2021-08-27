@@ -24,7 +24,7 @@ public class ManagerController {
         return service.findAll();
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public Manager create(@RequestBody Manager manager) throws AlgorithmException {
         if (manager.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");

@@ -24,7 +24,7 @@ public class SalarieController {
         return service.findAll();
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public Salarie create(@RequestBody Salarie salarie) throws AlgorithmException {
         if (salarie.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");

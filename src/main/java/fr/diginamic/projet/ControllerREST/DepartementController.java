@@ -16,7 +16,7 @@ public class DepartementController {
     @Autowired
     private DepartementService service;
 
-    @GetMapping("")
+    @GetMapping("/getAll")
     public List<Departement> listService(){
         return service.findAll();
     }

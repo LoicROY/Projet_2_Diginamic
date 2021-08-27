@@ -24,7 +24,7 @@ public class AdminController {
         return service.findAll();
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public Administrateur create(@RequestBody Administrateur administrateur) throws AlgorithmException {
         if (administrateur.getId() != null){
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
