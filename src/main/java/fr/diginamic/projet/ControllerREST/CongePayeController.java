@@ -38,7 +38,7 @@ public class CongePayeController {
             throw new AlgorithmException("id != null ! Vous allez modifier au lieu de créer");
         }
         AbsenceValidator.isValid(congePaye);
-        congePaye.setStatut(StatutType.EN_ATTENTE_VALIDATION);
+        congePaye.setStatut(StatutType.INITIALE);
         Salarie userCurrent = (Salarie) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userCurrent.setAbsences(new HashSet<>());
         congePaye.setSalarie(userCurrent);
