@@ -19,7 +19,7 @@ public class ManagerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("")
+    @GetMapping("/getAll")
     public List<Manager> listManager(){
         return service.findAll();
     }

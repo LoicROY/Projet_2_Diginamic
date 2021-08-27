@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/Salarie/create").permitAll()
                 .antMatchers(HttpMethod.POST, "/Administrateur/create").permitAll()
                 .antMatchers(HttpMethod.POST, "/Manager/create").permitAll()
+                .antMatchers(HttpMethod.GET, "/Manager/getAll").permitAll()
                 .antMatchers(HttpMethod.GET, "/Departement/getAll").permitAll()
                 .anyRequest().authenticated()
                 .and()
